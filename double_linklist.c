@@ -194,16 +194,16 @@ void reverse() // to print the list in reverse order { not reversing the list pe
 
 void sort()
 {
-    struct dl *pivot, *next, *pre;
-    // struct dl *t1, *t2, *t3;
-    // int t4;
-    int temp;
+    //struct dl *pivot, *next, *pre;
+     truct dl *t1, *t2, *t3;
+     int t4;
+    //int temp;
 
     if (p == NULL)
     {
         printf("list is empty :");
     }
-    else
+    /*else
     {
         pre = p;
         pivot = pre;
@@ -238,9 +238,9 @@ void sort()
                 }
             }
         }
-    }
+    }*/
 
-    /*
+    
     else
     {
         t1 = p;
@@ -277,5 +277,5 @@ void sort()
                 t3 = t2;
             }
         }
-    }*/
+    }
 }
