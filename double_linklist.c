@@ -7,7 +7,7 @@ struct dl // constructing structure for double link list
     struct dl *p_add, *n_add; //  p_add = store previous add & n_add = store next add
 };
 
-struct dl *p;
+struct dl *p, *last; // p = head node and last = wil hold last element of the list
 
 // defining prototype
 
@@ -89,6 +89,8 @@ void insert()
         k->p_add = next;   // storing the current add in the next element
         next->p_add = pre; // storing previous add in the current element
         next->n_add = k;
+
+        last = k;
     }
 }
 
@@ -115,7 +117,7 @@ void display()
 
 void delete()
 {
-    struct dl *pre, *cur,*temp;
+    struct dl *pre, *cur, *temp;
     if (p == NULL)
     {
         printf("list is empty : ");
@@ -127,14 +129,14 @@ void delete()
         scanf("%d", &n);
 
         cur = p;
-        
+
         if (cur->data == n) // to delete the first element
         {
             p = cur->n_add;
-            temp=p;
-            temp->p_add=NULL;
+            p->p_add=NULL;
+
+            cur->n_add->p_add=NULL;
             cur->n_add = NULL;
-            
             free(cur); // making the deleted element free
         }
         else
@@ -149,19 +151,31 @@ void delete()
                 }
             }
 
-            if (cur->data == n)
+            if (cur->data == n && cur->n_add!=NULL)
             {
                 pre->n_add = cur->n_add;
+                cur->n_add->p_add=pre;
                 cur->n_add = NULL;
                 free(cur);
             }
+            else{
+                if(cur->data==n && cur->n_add==NULL)
+                {
+                    pre->n_add=NULL;
+                    last=pre;
+                    free(cur);
+                }
             else
             {
                 printf("data is not present in list :\n");
             }
+            }
         }
     }
 }
+
+
+//--------------------------------------------------------------------------------------------
 
 void reverse() // to print the list in reverse order { not reversing the list permanently }
 {
@@ -173,11 +187,7 @@ void reverse() // to print the list in reverse order { not reversing the list pe
     }
     else
     {
-        temp = p;
-        while (temp->n_add != NULL) // loop till last element
-        {
-            temp = temp->n_add;
-        }
+        temp = last;
 
         while (temp->p_add != NULL) // iterating with previous add in reverse order and printing the data
         {
@@ -192,10 +202,12 @@ void reverse() // to print the list in reverse order { not reversing the list pe
     }
 }
 
+//---------------------------------------------------------------------------------------
+
 void sort()
 {
     //struct dl *pivot, *next, *pre;
-     truct dl *t1, *t2, *t3;
+     struct dl *t1, *t2, *t3;
      int t4;
     //int temp;
 
@@ -240,7 +252,7 @@ void sort()
         }
     }*/
 
-    
+
     else
     {
         t1 = p;
